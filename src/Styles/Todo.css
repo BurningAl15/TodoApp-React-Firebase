@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,300;0,500;1,600&display=swap');
+
+.MuiList-root{
+    margin:5% !important;
+}
+
+
+
+.clickable-icon
+{
+    cursor: pointer;
+}
+
+.task{
+    background:rgba(63, 81, 181, 0.200);
+    box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12)
+  ;
+  
+    
+    
+    margin: 5px auto;
+    border-radius: 5px;
+    /* background: hsla(122, 37%, 74%, 0.3); */
+}
+
+.task-icon{
+    color: #66bb6a;
+}
+
+.MuiTypography-body1{
+    font-family: 'Grandstander', cursive !important;
+}
+
+.button{
+    margin:5px !important;
+}

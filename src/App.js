@@ -3,9 +3,7 @@ import React, { useState,useEffect } from "react";
 import "./App.css";
 import {Button, FormControl, Input, InputLabel} from "@material-ui/core"
 import Todo from "./Components/Todo"
-
 import db from "./firebase";
-
 import firebase from 'firebase';
 
 function App() {
@@ -18,7 +16,7 @@ function App() {
     //with this, we call data from firebase so we get the data i stored before
     db.collection('todos').orderBy('timestamp','asc').onSnapshot(snapshot=>{
       // console.log(setTodos(snapshot.docs.map(doc=>doc.data().todo)))
-      setTodos(snapshot.docs.map(doc=>doc.data().todo))
+      setTodos(snapshot.docs.map(doc=>({id:doc.id, todo:doc.data().todo})))
     })
   }, []);
 
@@ -44,7 +42,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Hello World </h1>
+      <h1 className="title"> Whatsapp world </h1>
 
       <form>
         <FormControl>
@@ -58,11 +56,9 @@ function App() {
         </Button>
       </form>
 
-      <ul>
         {todos.map((todo) => (
           <Todo todo={todo}></Todo>
         ))}
-      </ul>
     </div>
   );
 }
