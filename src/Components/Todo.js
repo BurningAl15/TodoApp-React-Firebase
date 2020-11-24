@@ -6,12 +6,13 @@ import {
   Button,
   ListItemAvatar,
   Modal,
+  Input,
+  Container,
 } from "@material-ui/core";
 
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import EditIcon from "@material-ui/icons/Edit";
-import CloseIcon from "@material-ui/icons/Close";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -22,12 +23,18 @@ import "../Styles/Todo.css";
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    width: 400,
+    width: 500,
+    height: 250,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     textAlign: "center",
+    left: "0",
+    right: "0",
+    marginLeft: "auto",
+    marginRight: "auto",
+    transform: "translate(0,20vh)",
   },
 }));
 
@@ -36,15 +43,20 @@ function Todo(props) {
 
   const [open, setOpen] = useState(false);
   const classes = useStyles();
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
+  const [owner,setOwner]=useState("");
 
   const updateTodo = () => {
     //Update the todo with new input text
-    
+
     //Don't forget the merge:true, is to not override what is already in there
-    db.collection('todos').doc(props.todo.id).set({
-      todo:input
-    },{merge:true});
+    db.collection("todos").doc(props.todo.id).set(
+      {
+        todo: input,
+        owner:owner,
+      },
+      { merge: true }
+    );
 
     setOpen(false);
   };
@@ -53,23 +65,26 @@ function Todo(props) {
     <React.Fragment>
       <Modal open={open} onClose={(e) => setOpen(false)}>
         <div className={classes.paper}>
-          <h1>Open</h1>
+          <h1>Want to Edit?</h1>
+          <p>Add the stuff you want to edit</p>
 
-          <input
-            value={input}
-            placeholder={props.todo.todo}
-            onChange={(event) => setInput(event.target.value)}
-          />
+          <Container>
+            <Input
+              value={input}
+              placeholder={props.todo.todo}
+              onChange={(event) => setInput(event.target.value)}
+            />
 
-          <Button
-            variant="contained"
-            color="primary"
-            className="button"
-            disabled={!input}
-            onClick={(e) => updateTodo()}
-          >
-            <EditIcon color={lightBlue_Color} className="clickable-icon" />
-          </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className="button"
+              disabled={!input}
+              onClick={(e) => updateTodo()}
+            >
+              <EditIcon color={lightBlue_Color} className="clickable-icon" />
+            </Button>
+          </Container>
 
           {/* <button onClick={(e) => setOpen(false)}>x</button> */}
         </div>
@@ -82,7 +97,8 @@ function Todo(props) {
           </ListItemAvatar>
           <ListItemText
             primary={props.todo.todo}
-            secondary="Trying to look cool"
+            secondary={props.todo.owner}
+            // secondary={props.createdAt}
           />
           {/* <button>Edit</button> */}
 
